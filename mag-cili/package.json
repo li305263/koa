@@ -1,0 +1,14 @@
+{
+  "name": "mag-cili",
+  "version": "1.0.0",
+  "description": "磁力下载站",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "li35263",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.5.1"
+  }
+}
