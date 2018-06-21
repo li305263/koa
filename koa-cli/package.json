@@ -4,7 +4,9 @@
   "description": "koa脚手架",
   "main": "./server/index.js",
   "dependencies": {
-    "koa": "^2.5.1"
+    "koa": "^2.5.1",
+    "koa-body": "^4.0.3",
+    "koa-router": "^7.4.0"
   },
   "devDependencies": {},
   "scripts": {
