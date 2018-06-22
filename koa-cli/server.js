@@ -1,7 +1,12 @@
 const koa = require('koa')
 const app = new koa()
-const router = require('./router/index')
+const router = require('./server/router')
 const koaBody = require('koa-body')
+const connect = require('./server/database')
+
+;(async ()=>{
+ await connect
+})()
 
  app.use(async (ctx,next)=>{
     try{
