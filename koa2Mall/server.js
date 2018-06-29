@@ -2,7 +2,7 @@ const koa = require('koa')
 const app = new koa()
 const router = require('./server/router')
 const koaBody = require('koa-body')
-const connect = require('./server/database')
+const connect = require('./server/database/init')
 
 ;(async ()=>{
  await connect

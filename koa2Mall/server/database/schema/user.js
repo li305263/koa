@@ -10,4 +10,4 @@ const userSchema = new Schema({
     creatDate:{ type:Date , default:Date.now()},
 })
 
-module.exports = mongoose.model('User',userSchema)
+module.exports = mongoose.model('User',userSchema,'User')
