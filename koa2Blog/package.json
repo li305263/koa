@@ -17,7 +17,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "koa2Mall"
+    "koa2Blog"
   ],
   "author": "li305263",
   "license": "ISC"
