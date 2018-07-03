@@ -7,6 +7,7 @@ router.get('/',async (ctx,next)=>{
     let user = mongoose.model('User')
     let data = await user.find()
     ctx.body = {
+        code:0,
         data
     }
 })
