@@ -6,7 +6,7 @@ const userSchema = new Schema({
         unique:true,
         type:String
     },
-    userPwd:String,
+    password:String,
     creatDate:{ type:String , default:Date.now()},
 })
 

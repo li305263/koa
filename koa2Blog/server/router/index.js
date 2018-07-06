@@ -5,13 +5,22 @@ const User = require('../database/schema/user')
 const ArticleList = require('../database/schema/articleList')
 const router = new Router()
 
-router.post('/user_list', async (ctx, next) => {
+router.post('/login', async (ctx, next) => {
 
     let res = mongoose.model('User')
-    let data = await res.find()
-    ctx.body = {
-        code: 0,
-        data
+    let req = ctx.request.body
+    let data = await res.find({'userName':req.userName,'password':req.password})
+    console.log(data)
+    if(data.length>0){
+        ctx.body = {
+            code: 0,
+            msg:'登录成功'
+        }
+    }else{
+        ctx.body = {
+            code: -1,
+            msg:'账号或密码错误'
+        }
     }
 
 })
