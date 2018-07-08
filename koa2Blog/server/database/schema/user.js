@@ -7,7 +7,6 @@ const userSchema = new Schema({
         type:String
     },
     password:String,
-    creatDate:{ type:String , default:Date.now()},
-})
+},{timestamps: {createdAt: 'created', updatedAt: 'updated'}})
 
 module.exports = mongoose.model('User',userSchema,'User')

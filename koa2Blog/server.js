@@ -2,6 +2,10 @@ const koa = require('koa')
 const app = new koa()
 const router = require('./server/router')
 const koaBody = require('koa-body')
+const serve  = require("koa-static");
+ //验证jwt的koa中间件
+const jwtKoa = require('koa-jwt')
+const secret = 'jwt_blog'
 const connect = require('./server/database/init')
 
 ;(async ()=>{
@@ -37,8 +41,11 @@ app.use(async(ctx,next)=>{
 
     console.log(`${ctx.method} ${ctx.url} ${ms}ms`)
 })
-
+app.use(serve(__dirname))
 app.use(koaBody())
+app.use(jwtKoa({secret}).unless({
+        path: [/^\/login/,/^\/article_list/,/^\/tag_list/,/^\/article_detail/] //数组中的路径不需要通过jwt验证
+    }))
 app.use(router.routes())
 app.use(router.allowedMethods())
 

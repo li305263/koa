@@ -4,9 +4,14 @@
   "description": "koa2博客",
   "main": "./server/index.js",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^8.3.0",
     "koa": "^2.5.1",
     "koa-body": "^4.0.3",
+    "koa-jwt": "^3.3.2",
+    "koa-multer": "^1.0.2",
     "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
     "mongoose": "^5.1.6"
   },
   "devDependencies": {
