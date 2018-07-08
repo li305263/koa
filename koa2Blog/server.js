@@ -44,7 +44,7 @@ app.use(async(ctx,next)=>{
 app.use(serve(__dirname))
 app.use(koaBody())
 app.use(jwtKoa({secret}).unless({
-        path: [/^\/login/,/^\/article_list/,/^\/tag_list/,/^\/article_detail/] //数组中的路径不需要通过jwt验证
+        path: [/^\/login/,/^\/article_list/,/^\/tag_list/,/^\/article_detail/,/^\/update_img/] //数组中的路径不需要通过jwt验证
     }))
 app.use(router.routes())
 app.use(router.allowedMethods())

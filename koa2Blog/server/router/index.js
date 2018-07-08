@@ -66,11 +66,12 @@ router.post('/login', async (ctx, next) => {
 router.post('/update_img', upload.single('img'), async (ctx, next) => {
     let res = mongoose.model('ArticleList')
     let req = ctx.request.body
+
     ctx.body = {
         code: 0,
         msg: '上传成功',
         data: '/' + ctx.req.file.destination + '/' + ctx.req.file.filename
-    }
+    }   
 
 })
 //获取标签列表
