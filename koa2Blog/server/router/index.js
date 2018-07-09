@@ -166,9 +166,9 @@ router.post('/article_list', async (ctx, next) => {
         //  查询数组跟普通查询一样
         data = await res.find({
             'tags': tag
-        }).sort(sort).skip(skipnum).limit(pageSize)
+        },'title created brief img read tags title').sort(sort).skip(skipnum).limit(pageSize)
     } else {
-        data = await res.find().sort(sort).skip(skipnum).limit(pageSize)
+        data = await res.find({},'title created brief img read tags title').sort(sort).skip(skipnum).limit(pageSize)
     }
 
     ctx.body = {
@@ -266,7 +266,6 @@ router.post('/article_detail', async (ctx, next) => {
     let res = mongoose.model('ArticleList')
     let req = ctx.request.body
 
-
     await fn.update(
         res,
         req.id, {
@@ -280,6 +279,31 @@ router.post('/article_detail', async (ctx, next) => {
             data
         }
     })
+
+})
+//获取归档列表
+router.post('/archives', async (ctx, next) => {
+    let res = mongoose.model('ArticleList'),
+        req = ctx.request.body,
+        pageSize = req.pageSize, //一页多少条
+        currentPage = req.page, //当前第几页
+        skipnum = (currentPage - 1) * pageSize, //跳过数
+        //排序
+        sort = {               
+            "created": -1
+        }, 
+        data,count;
+        /*
+            find(查询条件,指定返回字段)
+        */
+        data = await res.find({},'title created').sort(sort).skip(skipnum).limit(pageSize)
+        count = await res.count()
+    
+
+    ctx.body = {
+        code: 0,
+        data,count
+    }
 
 })
 
