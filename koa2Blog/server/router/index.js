@@ -46,7 +46,7 @@ router.post('/login', async (ctx, next) => {
             name: req.userName
         }
         const token = jwt.sign(userToken, secret, {
-            expiresIn: '2h'
+            expiresIn: '1d'
         })
         ctx.body = {
             code: 0,
@@ -71,7 +71,7 @@ router.post('/update_img', upload.single('img'), async (ctx, next) => {
         code: 0,
         msg: '上传成功',
         data: '/' + ctx.req.file.destination + '/' + ctx.req.file.filename
-    }   
+    }
 
 })
 //获取标签列表
@@ -83,6 +83,68 @@ router.post('/tag_list', async (ctx, next) => {
     ctx.body = {
         code: 0,
         data
+    }
+
+})
+//添加标签
+router.post('/insert_tag', async (ctx, next) => {
+    const token = ctx.header.authorization // 获取jwt
+    let res = mongoose.model('TagList')
+    let req = ctx.request.body
+    console.log(req)
+
+    if (token) {
+        let payload = await verify(token.split(' ')[1], secret) // // 解密，获取payload
+        req.tags = req.tags.split(',')
+        let titleArr = []
+        for (let i = 0; i < req.tags.length; i++) {
+
+            titleArr.push({
+                title: req.tags[i]
+            })
+        }
+
+        await fn.insert(
+            res, titleArr
+        ).then(data => {
+            ctx.body = {
+                code: 0,
+                msg: '标签保存成功',
+                payload
+            }
+        })
+    } else {
+        ctx.body = {
+            msg: '无权限操作',
+            code: -1
+        }
+    }
+
+})
+//删除标签
+router.post('/del_tag', async (ctx, next) => {
+    const token = ctx.header.authorization // 获取jwt
+    let res = mongoose.model('TagList')
+    let req = ctx.request.body
+    console.log(req)
+
+    if (token) {
+        let payload = await verify(token.split(' ')[1], secret) // // 解密，获取payload
+
+        await fn.del(
+            res, req.id
+        ).then(data => {
+            ctx.body = {
+                code: 0,
+                msg: '删除成功',
+                payload
+            }
+        })
+    } else {
+        ctx.body = {
+            msg: '无权限操作',
+            code: -1
+        }
     }
 
 })
@@ -118,35 +180,16 @@ router.post('/article_list', async (ctx, next) => {
 //插入文章
 router.post('/insert_article', async (ctx, next) => {
     const token = ctx.header.authorization // 获取jwt
-    let TagList = mongoose.model('TagList')
     let res = mongoose.model('ArticleList')
     let req = ctx.request.body
 
     if (token) {
-        let  payload = await verify(token.split(' ')[1], secret) // // 解密，获取payload
-        
-        if (req.tags&&req.tags.length > 0) {
-            req.tags = req.tags.split(',')
-            let titleArr = []
-            for (let i = 0; i < req.tags.length; i++) {
-    
-                titleArr.push({
-                    title: req.tags[i]
-                })
-            }
-    
-            console.log(titleArr)
-            await fn.insert(
-                TagList, titleArr
-            ).then(data => {
-                console.log('标签保存成功')
-            })
-        }
-    
+        let payload = await verify(token.split(' ')[1], secret) // // 解密，获取payload
+
         await fn.insert(
             res, req
         ).then(data => {
-    
+
             ctx.body = {
                 code: 0,
                 msg: '保存成功',
@@ -168,13 +211,14 @@ router.post('/update_article', async (ctx, next) => {
     let req = ctx.request.body
 
     if (token) {
-        let  payload = await verify(token.split(' ')[1], secret) // // 解密，获取payload
+        let payload = await verify(token.split(' ')[1], secret) // // 解密，获取payload
+
         await fn.update(
             res,
             req.id,
             req
         ).then(data => {
-    
+
             ctx.body = {
                 code: 0,
                 msg: '保存成功',
@@ -187,7 +231,7 @@ router.post('/update_article', async (ctx, next) => {
             code: -1
         }
     }
-    
+
 
 })
 //删除文章
@@ -197,12 +241,12 @@ router.post('/del_article', async (ctx, next) => {
     let req = ctx.request.body
 
     if (token) {
-        let  payload = await verify(token.split(' ')[1], secret) // // 解密，获取payload
+        let payload = await verify(token.split(' ')[1], secret) // // 解密，获取payload
         await fn.del(
             res,
             req.id
         ).then(data => {
-    
+
             ctx.body = {
                 code: 0,
                 msg: '删除成功',
@@ -215,7 +259,7 @@ router.post('/del_article', async (ctx, next) => {
             code: -1
         }
     }
-    
+
 })
 //获取文章详情
 router.post('/article_detail', async (ctx, next) => {
