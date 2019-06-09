@@ -14,6 +14,7 @@ const User = require('../database/schema/user')
 const ArticleList = require('../database/schema/articleList')
 const TagList = require('../database/schema/tagList')
 const router = new Router()
+const HOST = '/blog/api'
 
 
 //文件上传
@@ -33,7 +34,7 @@ var upload = multer({
 });
 
 //登录
-router.post('/login', async (ctx, next) => {
+router.post(HOST + '/login', async (ctx, next) => {
 
     let res = mongoose.model('User')
     let req = ctx.request.body
@@ -63,7 +64,7 @@ router.post('/login', async (ctx, next) => {
 })
 
 //上传图片
-router.post('/update_img', upload.single('img'), async (ctx, next) => {
+router.post(HOST + '/update_img', upload.single('img'), async (ctx, next) => {
     let res = mongoose.model('ArticleList')
     let req = ctx.request.body
 
@@ -75,7 +76,7 @@ router.post('/update_img', upload.single('img'), async (ctx, next) => {
 
 })
 //获取标签列表
-router.post('/tag_list', async (ctx, next) => {
+router.post(HOST + '/tag_list', async (ctx, next) => {
     let res = mongoose.model('TagList')
     let req = ctx.request.body
 
@@ -87,7 +88,7 @@ router.post('/tag_list', async (ctx, next) => {
 
 })
 //添加标签
-router.post('/insert_tag', async (ctx, next) => {
+router.post(HOST + '/insert_tag', async (ctx, next) => {
     const token = ctx.header.authorization // 获取jwt
     let res = mongoose.model('TagList')
     let req = ctx.request.body
@@ -122,7 +123,7 @@ router.post('/insert_tag', async (ctx, next) => {
 
 })
 //删除标签
-router.post('/del_tag', async (ctx, next) => {
+router.post(HOST + '/del_tag', async (ctx, next) => {
     const token = ctx.header.authorization // 获取jwt
     let res = mongoose.model('TagList')
     let req = ctx.request.body
@@ -150,7 +151,7 @@ router.post('/del_tag', async (ctx, next) => {
 })
 
 //获取文章列表
-router.post('/article_list', async (ctx, next) => {
+router.post(HOST + '/article_list', async (ctx, next) => {
     let res = mongoose.model('ArticleList'),
         req = ctx.request.body,
         pageSize = req.pageSize, //一页多少条
@@ -178,7 +179,7 @@ router.post('/article_list', async (ctx, next) => {
 
 })
 //插入文章
-router.post('/insert_article', async (ctx, next) => {
+router.post(HOST + '/insert_article', async (ctx, next) => {
     const token = ctx.header.authorization // 获取jwt
     let res = mongoose.model('ArticleList')
     let req = ctx.request.body
@@ -205,7 +206,7 @@ router.post('/insert_article', async (ctx, next) => {
 
 })
 //更新文章
-router.post('/update_article', async (ctx, next) => {
+router.post(HOST + '/update_article', async (ctx, next) => {
     const token = ctx.header.authorization // 获取jwt
     let res = mongoose.model('ArticleList')
     let req = ctx.request.body
@@ -235,7 +236,7 @@ router.post('/update_article', async (ctx, next) => {
 
 })
 //删除文章
-router.post('/del_article', async (ctx, next) => {
+router.post(HOST + '/del_article', async (ctx, next) => {
     const token = ctx.header.authorization // 获取jwt
     let res = mongoose.model('ArticleList')
     let req = ctx.request.body
@@ -262,7 +263,7 @@ router.post('/del_article', async (ctx, next) => {
 
 })
 //获取文章详情
-router.post('/article_detail', async (ctx, next) => {
+router.post(HOST + '/article_detail', async (ctx, next) => {
     let res = mongoose.model('ArticleList')
     let req = ctx.request.body
 
@@ -282,7 +283,7 @@ router.post('/article_detail', async (ctx, next) => {
 
 })
 //获取归档列表
-router.post('/archives', async (ctx, next) => {
+router.post(HOST + '/archives', async (ctx, next) => {
     let res = mongoose.model('ArticleList'),
         req = ctx.request.body,
         pageSize = req.pageSize, //一页多少条
